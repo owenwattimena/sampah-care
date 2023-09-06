@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->group(function(){
         Route::get('report', [ReportController::class, 'index']);
+        Route::get('report/total', [ReportController::class, 'getTotalReport']);
+        Route::post('report', [ReportController::class, 'save']);
     });
 
     Route::post('login', [AuthController::class, 'login']);

@@ -19,14 +19,14 @@
             </a>
         </li>
         <li>
-            <a href="{{ url('/') }}">
+            <a href="{{ route('pengaduan') }}">
                 <div class="parent-icon"><i class="bx bx-message-rounded"></i>
                 </div>
                 <div class="menu-title">Pengaduan</div>
             </a>
         </li>
         <li>
-            <a href="{{ url('/') }}">
+            <a href="{{ route('pengguna') }}">
                 <div class="parent-icon"><i class="bx bx-user"></i>
                 </div>
                 <div class="menu-title">Pengguna</div>

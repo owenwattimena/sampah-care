@@ -6,6 +6,7 @@ use App\Helpers\AlertFormatter;
 use App\Http\Controllers\Controller;
 use App\Services\AdminService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -17,8 +18,8 @@ class AdminController extends Controller
     }
     public function index()
     {
-        $data['admin'] = $this->adminService->getAll(except:[\Auth::guard('admin')->user()->id]);
-        return view('admin.index', $data);
+        $data['admin'] = $this->adminService->getAll(except:[Auth::guard('admin')->user()->id]);
+        return view('admin.admin.index', $data);
     }
 
     public function create(Request $request)

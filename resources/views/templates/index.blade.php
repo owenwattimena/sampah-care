@@ -162,24 +162,24 @@
     </div> --}}
     <!--end switcher-->
     <!-- Bootstrap JS -->
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="{{url('/')}}/assets/js/bootstrap.bundle.min.js"></script>
     <!--plugins-->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/plugins/simplebar/js/simplebar.min.js"></script>
-    <script src="assets/plugins/metismenu/js/metisMenu.min.js"></script>
-    <script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
-    <script src="assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js"></script>
-    <script src="assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="assets/plugins/chartjs/js/Chart.min.js"></script>
-    <script src="assets/plugins/chartjs/js/Chart.extension.js"></script>
-    <script src="assets/plugins/sparkline-charts/jquery.sparkline.min.js"></script>
+    <script src="{{url('/')}}/assets/js/jquery.min.js"></script>
+    <script src="{{url('/')}}/assets/plugins/simplebar/js/simplebar.min.js"></script>
+    <script src="{{url('/')}}/assets/plugins/metismenu/js/metisMenu.min.js"></script>
+    <script src="{{url('/')}}/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+    <script src="{{url('/')}}/assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="{{url('/')}}/assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="{{url('/')}}/assets/plugins/chartjs/js/Chart.min.js"></script>
+    <script src="{{url('/')}}/assets/plugins/chartjs/js/Chart.extension.js"></script>
+    <script src="{{url('/')}}/assets/plugins/sparkline-charts/jquery.sparkline.min.js"></script>
     <!--notification js -->
-    <script src="assets/plugins/notifications/js/lobibox.min.js"></script>
-    <script src="assets/plugins/notifications/js/notifications.min.js"></script>
+    <script src="{{url('/')}}/assets/plugins/notifications/js/lobibox.min.js"></script>
+    <script src="{{url('/')}}/assets/plugins/notifications/js/notifications.min.js"></script>
 
-    <script src="assets/js/index.js"></script>
+    <script src="{{url('/')}}/assets/js/index.js"></script>
     <!--app JS-->
-    <script src="assets/js/app.js"></script>
+    <script src="{{url('/')}}/assets/js/app.js"></script>
     @yield('script')
 </body>
 

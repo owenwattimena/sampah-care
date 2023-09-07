@@ -6,6 +6,7 @@ use App\Helpers\JsonFormatter;
 use App\Http\Controllers\Controller;
 use App\Models\Pengaduan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ReportController extends Controller
 {
@@ -39,13 +40,13 @@ class ReportController extends Controller
     public function save(Request $request)
     {
         $user = $request->user();
-        $validator = \Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'isi' => 'required',
             'foto' => 'required|file',
             'latitude' => 'required',
             'longitude' => 'required',
         ]);
-
+        // return JsonFormatter::error("Pengaduan gagal. ", data: $request->all());
         if ($validator->fails()) {
             return JsonFormatter::error($validator->errors()->first(), data: $validator->errors()->all(), code: 422);
         }
@@ -55,8 +56,9 @@ class ReportController extends Controller
         $data['status'] = 'pending';
 
         try {
-            $fileName = round(microtime(true) * 1000) . '.' . $request->foto->getClientOriginalExtension();
-            $request->foto->storageAs("public/report", $fileName);
+            $foto = $request->file('foto');
+            $fileName = round(microtime(true) * 1000) . '.' . $foto->extension();
+            $foto->move("public/report", $fileName);
             $filePath = 'public/report/' . $fileName;
             $data['foto'] = $filePath;
             $result = Pengaduan::create($data);
@@ -70,3 +72,5 @@ class ReportController extends Controller
         }
     }
 }
+
+// https://coderadvise.com/upload-file-or-image-on-laravel-through-rest-api/

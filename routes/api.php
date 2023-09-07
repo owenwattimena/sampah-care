@@ -21,6 +21,7 @@ Route::prefix('v1')->group(function () {
         Route::get('report', [ReportController::class, 'index']);
         Route::get('report/total', [ReportController::class, 'getTotalReport']);
         Route::post('report', [ReportController::class, 'save']);
+        Route::get('report/{id}', [ReportController::class, 'show']);
     });
 
     Route::post('login', [AuthController::class, 'login']);

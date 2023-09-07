@@ -22,6 +22,12 @@ class ReportController extends Controller
         return JsonFormatter::success($query->get(), message: "Data pengaduan");
     }
 
+    public function show(Request $request, int $id)
+    {
+        $report = Pengaduan::findOrFail($id);
+        return JsonFormatter::success($report, message: "Detail pengaduan");
+    }
+
     public function getTotalReport(Request $request)
     {
         $user = $request->user();

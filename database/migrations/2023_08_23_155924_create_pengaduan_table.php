@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('foto');
             $table->double('latitude');
             $table->double('longitude');
-            $table->enum('status', ['pending', 'proses', 'ditolak']);
+            $table->enum('status', ['pending', 'proses', 'selesai']);
             $table->timestamps();
 
             $table->foreign('id_user')->references('id')->on('users');

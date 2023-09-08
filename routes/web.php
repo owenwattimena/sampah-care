@@ -26,6 +26,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::prefix('pengaduan')->group(function () {
         Route::get('/', [PengaduanController::class, 'index'])->name('pengaduan');
         Route::get('/{id}', [PengaduanController::class, 'show'])->name('pengaduan.show');
+        Route::post('/{id}', [PengaduanController::class, 'tanggapi'])->name('pengaduan.tanggapi');
         Route::delete('/{id}', [PengaduanController::class, 'delete'])->name('pengaduan.delete');
     });
 

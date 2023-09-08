@@ -14,6 +14,11 @@
 @section('content')
 <div class="card">
     <div class="card-body">
+        <div class="card border-start border-info">
+            <div class="card-body">
+              <h5>Pengaduan</h5>
+            </div>
+        </div>
         <div class="mb-3 row">
             <label for="staticNIK" class="col-sm-2 col-form-label">Status</label>
             <div class="col-sm-10">
@@ -50,6 +55,46 @@
                 <div id="map" class="map map-home" style="height: 500px; margin-top: 50px"></div>
             </div>
         </div>
+        <div class="card border-start border-info">
+            <div class="card-body">
+              <h5>Tanggapan</h5>
+            </div>
+        </div>
+        <form action="{{route('pengaduan.tanggapi', $pengaduan->id)}}" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="mb-3 row">
+                <label for="selectStatus" class="col-sm-2 col-form-label">Status</label>
+                <div class="col-sm-10">
+                    <select type="text" class="form-control" id="selectStatus" name="status" required>
+                        @foreach (['pending', 'proses', 'selesai'] as $item)
+                        <option value="{{$item}}" {{$pengaduan->status == $item ? 'selected' : ''}}>{{$item}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputTanggapan" class="col-sm-2 col-form-label">Isi</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="inputTanggapan" name="isi" placeholder="Masukan Tanggapan">{{$pengaduan->tanggapan->isi ?? ''}}</textarea>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputFoto" class="col-sm-2 col-form-label">Foto</label>
+                <div class="col-sm-10">
+                    @if ($pengaduan->tanggapan != null ) 
+                    @if ($pengaduan->tanggapan->foto != null ) 
+                    <img src="{{asset($pengaduan->tanggapan->foto)}}" alt="" width="50%" class="mb-3">
+                    @endif 
+                    @endif 
+                    <input type="file" class="form-control" id="inputFoto" name="foto">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col-sm-12">
+                    <button type="submit" class="form-control btn btn-success" >SIMPAN</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 @endsection
@@ -61,11 +106,11 @@
 		osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 		osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib});
 
-	var map = L.map('map').setView([`-5.16096`, `119.422976`], 15).addLayer(osm);
+	var map = L.map('map').setView([`{{$pengaduan->latitude}}`,`{{$pengaduan->longitude}}`], 15).addLayer(osm);
 
-	L.marker([`{{$pengaduan->longitude}}`, `{{$pengaduan->latitude}}`])
-		.addTo(map)
-		.bindPopup('A pretty CSS popup.<br />Easily customizable.')
-		.openPopup();
+	L.marker([`{{$pengaduan->latitude}}`,`{{$pengaduan->longitude}}`])
+		.addTo(map);
+		// .bindPopup('A pretty CSS popup.<br />Easily customizable.')
+		// .openPopup();
 </script>
 @endsection

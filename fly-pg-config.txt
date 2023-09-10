@@ -1,0 +1,8 @@
+Postgres cluster pg-sampahcare created
+  Username:    postgres
+  Password:    9h4ppzFC5c8056p
+  Hostname:    pg-sampahcare.internal
+  Flycast:     fdaa:2:61cf:0:1::5
+  Proxy port:  5432
+  Postgres port:  5433
+  Connection string: postgres://postgres:9h4ppzFC5c8056p@pg-sampahcare.flycast:5432

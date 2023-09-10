@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PengaduanController;
 use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\AuthController;
@@ -19,9 +20,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth:admin'])->group(function () {
-    Route::get('/', function () {
-        return view('templates.index');
-    });
+
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::prefix('pengaduan')->group(function () {
         Route::get('/', [PengaduanController::class, 'index'])->name('pengaduan');
@@ -30,18 +30,21 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::delete('/{id}', [PengaduanController::class, 'delete'])->name('pengaduan.delete');
     });
 
-    Route::prefix('admin')->group(function () {
-        Route::get('/', [AdminController::class, 'index'])->name('admin');
-        Route::post('/', [AdminController::class, 'create'])->name('admin.create');
-        Route::put('/{id}', [AdminController::class, 'update'])->name('admin.update');
-        Route::delete('/{id}', [AdminController::class, 'delete'])->name('admin.delete');
-    });
-    Route::prefix('pengguna')->group(function () {
-        Route::get('/', [PenggunaController::class, 'index'])->name('pengguna');
-        Route::delete('/{id}', [PenggunaController::class, 'delete'])->name('pengguna.delete');
+    Route::middleware('adminLevel')->group(function () {
+
+        Route::prefix('admin')->group(function () {
+            Route::get('/', [AdminController::class, 'index'])->name('admin');
+            Route::post('/', [AdminController::class, 'create'])->name('admin.create');
+            Route::put('/{id}', [AdminController::class, 'update'])->name('admin.update');
+            Route::delete('/{id}', [AdminController::class, 'delete'])->name('admin.delete');
+        });
+        Route::prefix('pengguna')->group(function () {
+            Route::get('/', [PenggunaController::class, 'index'])->name('pengguna');
+            Route::delete('/{id}', [PenggunaController::class, 'delete'])->name('pengguna.delete');
+        });
     });
 
-    Route::get('keluar', function(){
+    Route::get('keluar', function () {
         Auth::guard('admin')->logout();
         return redirect()->route('masuk');
     })->name('keluar');

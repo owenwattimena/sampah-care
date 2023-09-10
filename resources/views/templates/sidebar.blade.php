@@ -25,6 +25,8 @@
                 <div class="menu-title">Pengaduan</div>
             </a>
         </li>
+        @if (auth()->guard('admin')->user()->level == 'admin')
+
         <li>
             <a href="{{ route('pengguna') }}">
                 <div class="parent-icon"><i class="bx bx-user"></i>
@@ -39,6 +41,8 @@
                 <div class="menu-title">Admin</div>
             </a>
         </li>
+        @endif
+
     </ul>
     <!--end navigation-->
 </div>

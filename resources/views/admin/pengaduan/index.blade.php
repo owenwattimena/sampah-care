@@ -2,6 +2,7 @@
 
 @section('style')
 <link href="assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
 @endsection
 
 @section('title', 'Pengaduan')
@@ -34,10 +35,6 @@
                         <label for="inputStatus" class="form-label">_</label>
                         <button class="form-control" id="inputTglAkhir" name="akhir">Filter</button>
                     </div>
-                    <div class="col-md-1 mb-3">
-                        <label for="inputStatus" class="form-label">_</label>
-                        <button class="form-control btn btn-primary" id="inputTglAkhir">Cetak</button>
-                    </div>
                 </div>
             </form>
         </div>
@@ -63,11 +60,13 @@
                         <td><span class="badge bg-{{$item->status == 'pending' ? 'danger' : ($item->status == 'proses' ? 'primary' : 'success') }}">{{$item->status}}</span></td>
                         <td>
                             <a class="btn btn-sm btn-success" href="{{route('pengaduan.show', $item->id)}}">Lihat</a>
+                            @if (auth()->guard('admin')->user()->level == 'admin')
                             <form action="{{ route('pengaduan.delete', $item->id) }}" method="post" class="d-inline">
                                 @csrf
                                 @method('delete')
                                 <button class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data?')">Hapus</button>
                             </form>
+                            @endif
                         </td>
                     </tr>
                     @endforeach
@@ -80,9 +79,15 @@
 @section('script')
 <script src="assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
 <script src="assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#example').DataTable();
+        $('#example').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'print'
+        ]
+        });
     });
 
 </script>

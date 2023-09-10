@@ -35,6 +35,8 @@ class PengaduanController extends Controller
 
     public function show(Request $request, int $id)
     {
+        $data['editTanggapan'] = (Auth::guard('admin')->user()->level == 'petugas');
+
         $data['pengaduan'] = Pengaduan::with('tanggapan')->findOrFail($id);
         return view('admin.pengaduan.show', $data);
     }
@@ -44,59 +46,62 @@ class PengaduanController extends Controller
         // Validasi data
         $data = $request->validate([
             'status' => 'required',
-            'isi'   => 'required'
+            'isi' => 'required'
         ]);
         $data['id_admin'] = Auth::guard('admin')->user()->id; // ambil id admin
 
         // cek apakah perubahan status yg dikirim adalah pending atau bukan
         if ($request->status == 'pending')
             return redirect()->back()->with(AlertFormatter::danger("Harap pilih status selain 'pending'!."));
-        
+
         // ambil data pengaduan by id
         $pengaduan = Pengaduan::findOrFail($id);
         $data['id_pengaduan'] = $pengaduan->id; // ambil id pegaduan
 
-        // cek apakah status pengaduan terakhir adalah proses atau bukan 
-        if($pengaduan->status == 'proses')
-        {
-
-            if($request->status == 'proses') return redirect()->back()->with(AlertFormatter::danger("Harap pilih status selain 'proses'!."));
+        // cek apakah status pengaduan terakhir adalah proses atau bukan
+        if ($pengaduan->status == 'proses') {
+            if ($request->status == 'proses')
+                return redirect()->back()->with(AlertFormatter::danger("Harap pilih status selain 'proses'!."));
         }
-        if($pengaduan->status == 'selesai') return redirect()->back()->with(AlertFormatter::danger("Tidak dapat memberikan tanggapan, Status pengaduan telah selesai."));
+        if ($pengaduan->status == 'selesai')
+            return redirect()->back()->with(AlertFormatter::danger("Tidak dapat memberikan tanggapan, Status pengaduan telah selesai."));
 
 
 
         $tanggapan = Tanggapan::where('id_pengaduan', $pengaduan->id)->first();
-        // dd($tanggapan != null);
-        if($tanggapan) $fototanggapan = $tanggapan->foto; // ambil foto lama
-        if($request->file('foto') != null)
-        {
+        // dd($tanggapan);
+        $fototanggapan = null;
+        if ($tanggapan != null)
+            $fototanggapan = $tanggapan->foto; // ambil foto lama
+
+        if ($request->file('foto') != null) {
             $foto = $request->file('foto');
             $fileName = round(microtime(true) * 1000) . '.' . $foto->extension();
             $foto->move("public/report/tanggapan", $fileName);
             $filePath = 'public/report/tanggapan/' . $fileName;
             $data['foto'] = $filePath;
-            if(isset($fototanggapan ))$tanggapan->foto = $filePath;
+            if (isset($fototanggapan))
+                $tanggapan->foto = $filePath;
         }
 
-        if($tanggapan != null)
-        {
-            $tanggapan->isi = $data['isi']; 
+        if ($tanggapan != null) {
+            $tanggapan->isi = $data['isi'];
             $tanggapan = $tanggapan->save();
-            
-            if($fototanggapan != null)
-            {
+
+            if ($fototanggapan != null) {
                 unlink($fototanggapan);
             }
-            
-        }else{   
+
+        } else {
             $tanggapan = Tanggapan::create($data);
         }
 
-        if($tanggapan)
+        if ($tanggapan) {
+
             $pengaduan->status = $request->status;
             $pengaduan->save();
             return redirect()->back()->with(AlertFormatter::success("Berhasil memberikan tanggapan."));
+        }
         return redirect()->back()->with(AlertFormatter::danger("Gagal memberikan tanggapan."));
     }
 

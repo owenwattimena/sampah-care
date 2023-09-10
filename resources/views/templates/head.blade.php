@@ -28,5 +28,5 @@
 	<link rel="stylesheet" href="{{url('/')}}/assets/css/semi-dark.css" />
 	<link rel="stylesheet" href="{{url('/')}}/assets/css/header-colors.css" />
     @yield('style')
-	<title>Amdash - Bootstrap 5 Admin Template</title>
+	<title>Sampah Care - Peduli sampah</title>
 </head>

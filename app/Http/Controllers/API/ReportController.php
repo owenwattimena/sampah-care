@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Helpers\JsonFormatter;
 use App\Http\Controllers\Controller;
 use App\Models\Pengaduan;
+use App\Models\Tanggapan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -26,6 +27,14 @@ class ReportController extends Controller
     {
         $report = Pengaduan::findOrFail($id);
         return JsonFormatter::success($report, message: "Detail pengaduan");
+    }
+
+    public function feedback(Request $request, int $reportId)
+    {
+        $feedback = Tanggapan::where('id_pengaduan', $reportId)->first();
+        if($feedback)
+            return JsonFormatter::success($feedback, message: "Data tanggapan");
+            return JsonFormatter::error("Data tanggapan tidak ditemukan", code:404);
     }
 
     public function getTotalReport(Request $request)

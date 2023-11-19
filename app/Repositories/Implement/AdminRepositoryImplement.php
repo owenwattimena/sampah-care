@@ -45,6 +45,7 @@ class AdminRepositoryImplement implements AdminRepository
         if(isset($data['password']))
             $admin->password = Hash::make($data['password']);
         $admin->level = $data['level'];
+        $admin->email = $data['email'];
         if($admin->save()) return $admin;
             return null;
 

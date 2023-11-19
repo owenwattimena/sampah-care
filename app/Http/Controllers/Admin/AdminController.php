@@ -31,6 +31,7 @@ class AdminController extends Controller
             'alamat' => 'required',
             'username' => 'required|unique:admin,username',
             'password' => 'required',
+            'email' => 'required',
         ]);
         try {
             if($this->adminService->save($data))
@@ -50,6 +51,7 @@ class AdminController extends Controller
             'no_telp' => 'required',
             'alamat' => 'required',
             'username' => 'required',
+            'email' => 'required',
         ]);
         try {
             if($this->adminService->save($data, $id))

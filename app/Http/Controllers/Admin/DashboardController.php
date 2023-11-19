@@ -3,13 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NotificationMail;
 use App\Models\Pengaduan;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Mail;
 class DashboardController extends Controller
 {
     public function index()
     {
+
+        $data = [
+            'nama' => 'Owen',
+            'totalPending' => '0',
+            'pengaduan' => []
+        ];
+        Mail::to('wentoxwtt@gmail.com')->send(new NotificationMail('mail.admin.index', $data));
 
         $query = Pengaduan::query();
         $query = $query->get();

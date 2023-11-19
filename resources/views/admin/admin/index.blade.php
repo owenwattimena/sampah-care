@@ -52,6 +52,10 @@
                                 <label for="inputPassword" class="form-label">Password<sup class="text-danger">*</sup> </label>
                                 <input type="password" class="form-control" id="inputPassword" name="password" required>
                             </div>
+                            <div class="mb-3">
+                                <label for="inputEmail" class="form-label">Email<sup class="text-danger">*</sup> </label>
+                                <input type="email" class="form-control" id="inputEmail" name="email" required>
+                            </div>
                             <button type="submit" class="btn btn-primary w-100">Simpan</button>
                         </form>
                     </div>
@@ -67,6 +71,7 @@
                         <th>Jabatan</th>
                         <th>No. Telp</th>
                         <th>Alamat</th>
+                        <th>Email</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -78,6 +83,7 @@
                         <td>{{ $item->level }}</td>
                         <td>{{ $item->no_telp }}</td>
                         <td>{{ $item->alamat }}</td>
+                        <td>{{ $item->email }}</td>
                         <td>
                             <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#ubahAdmin{{ $item->id }}">Ubah</button>
                             <form action="{{ route('admin.delete', $item->id) }}" method="post" class="d-inline">
@@ -126,6 +132,10 @@
                                         <div class="mb-3">
                                             <label for="inputPassword" class="form-label">Password<sup class="text-danger">*</sup> </label>
                                             <input type="password" class="form-control" id="inputPassword" name="password">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="inputEmail" class="form-label">Email<sup class="text-danger">*</sup> </label>
+                                            <input type="email" class="form-control" id="inputEmail" name="email" value="{{ $item->email }}">
                                         </div>
                                         <button type="submit" class="btn btn-primary w-100">Simpan</button>
                                     </form>
